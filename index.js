@@ -9,7 +9,7 @@ app.use(router)
 
 
 
-await connection.sync({ force: true });
+await connection.sync({ force: false });
 
 app.listen(8080, () => {
 	console.log(`🚀 ~ app.listen ~ listen: http://localhost:8080`);

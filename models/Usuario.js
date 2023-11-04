@@ -24,8 +24,7 @@ Usuario.init(
 			type: DT.INTEGER,
 			allowNull: false,
 			validate: {
-				isInt: true,
-				max: 10,
+				isInt: true
 			},
 		},
 		

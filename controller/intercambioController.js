@@ -1,4 +1,4 @@
-// import { Usuario, Libro, Intercambio } from "../models/relaciones.js";
+import { Usuario, Libro, Intercambio } from "../models/relaciones.js";
 class IntercambioController {
 	constructor() {}
 	getAllIntercambios = (req, res) => {
@@ -9,8 +9,8 @@ class IntercambioController {
 			const { id } = req.params;
 			const user = await Libro.findOne({
 				where: { id },
-				attributes: ["id", "nombre"],
-				include: [{ model: Usuario, attributes: ["nombre"] }],
+				attributes: ["id"],
+				
 			});
 
 			if (!user) throw new Error("no hay Intercambio");
