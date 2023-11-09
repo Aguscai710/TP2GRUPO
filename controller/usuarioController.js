@@ -1,4 +1,3 @@
-import { Model } from "sequelize";
 import { Usuario,Libro } from "../models/relaciones.js";
 
 class UsuarioController {
@@ -13,7 +12,7 @@ class UsuarioController {
 			const user = await Usuario.findOne({
 				where: { id },
 				attributes: ["id", "nombre"],
-				include:[{model:Libro, attributes:["titulo"]}]
+				
 				
 			});
 
@@ -30,8 +29,8 @@ class UsuarioController {
 	};
 	createUser = async (req, res) => {
 		try {
-			const { nombre, password, mail,telefono, libroid } = req.body;
-			const user = await Usuario.create({ nombre, password, mail, telefono, libroid  });
+			const { nombre, password, mail,telefono } = req.body;
+			const user = await Usuario.create({ nombre, password, mail, telefono});
 			res.status(200).send({
 				success: true,
 				message: "Usuario creado con exito",

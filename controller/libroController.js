@@ -1,4 +1,4 @@
-import { Usuario, Libro, Intercambio } from "../models/relaciones.js";
+import { Usuario, Libro } from "../models/relaciones.js";
 
 class LibroController {
 	constructor() {}
@@ -11,7 +11,7 @@ class LibroController {
 			const user = await Libro.findOne({
 				where: { id },
 				attributes: ["id", "titulo"],
-                
+				include: [{ model: Usuario,attributes:["nombre"]}]
 			});
 
 			if (!user) throw new Error("no hay Libro");
@@ -27,14 +27,14 @@ class LibroController {
 	};
 	createLibro = async (req, res) => {
 		try {
-			const { titulo, descripcion, genero, autor, imagen, usuarioId } = req.body;
+			const { titulo, descripcion, genero, autor, imagen, usuarioid } = req.body;
 			const user = await Libro.create({
 				titulo,
 				descripcion,
 				genero,
 				autor,
 				imagen,
-				usuarioId,
+				usuarioid,
 			});
 			res.status(200).send({
 				success: true,

@@ -1,4 +1,4 @@
-import { Peticion } from "../models/relaciones.js";
+import { Peticion,Usuario,Libro } from "../models/relaciones.js";
 
 class PeticionController {
 	constructor() {}
@@ -11,9 +11,10 @@ class PeticionController {
 			const pet = await Peticion.findOne({
 				where: { id },
 				attributes: ["id"],
+				include:[{model:Libro, attributes:["titulo"]}]
 			});
 
-			if (!user) throw new Error("no hay Peticion");
+			if (!pet) throw new Error("no hay Peticion");
 
 			res.status(200).send({
 				success: true,
@@ -26,8 +27,8 @@ class PeticionController {
 	};
 	createPeticion = async (req, res) => {
 		try {
-			const { usuario, libro} = req.body;
-			const pet = await Peticion.create({ usuario, libro });
+			const { descripcion,usuarioid, libroid} = req.body;
+			const pet = await Peticion.create({ descripcion,usuarioid, libroid });
 			res.status(200).send({
 				success: true,
 				message: "Peticion creada con exito",
