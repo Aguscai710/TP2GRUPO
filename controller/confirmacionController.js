@@ -3,7 +3,16 @@ import { Confirmacion } from "../models/relaciones.js";
 class ConfirmacionController {
 	constructor() {}
 	getAllConfirmaciones = (req, res) => {
-		res.send("Confirmaciones");
+		try {
+			const confirmaciones = Confirmacion.findAll({ attributes: ["id"] });
+			res.status(200).send({
+				success: true,
+				message: "Todas las confirmaciones que hay",
+				data: confirmaciones,
+			});
+		} catch (error) {
+			res.status(400).send({ success: false, message: error.message });
+		}
 	};
 	getConfirmacionById = async (req, res) => {
 		try {
@@ -41,7 +50,16 @@ class ConfirmacionController {
 		res.send("Confirmacion actualizada");
 	};
 	deleteConfirmacion = (req, res) => {
-		res.send("Confirmacion eliminada");
+		try {
+			const { id } = req.params;
+			const confirmacion = Confirmacion.destroy({
+				where: { id },
+			});
+			if (!confirmacion) throw new Error("no se elimino nada");
+			res.status(200).send({ success: true, message: "confirmacion eliminada", data: confirmacion });
+		} catch (error) {
+			res.status(400).send({ success: false, message: error.message });
+		}
 	};
 }
 

@@ -3,7 +3,16 @@ import { Peticion,Usuario,Libro } from "../models/relaciones.js";
 class PeticionController {
 	constructor() {}
 	getAllPeticiones = (req, res) => {
-		res.send("Peticiones");
+		try {
+			const peticiones =  Peticion.findAll({ attributes: ["id"] });
+			res.status(200).send({
+				success: true,
+				message: "Todas las peticiones que hay",
+				data: peticiones,
+			});
+		} catch (error) {
+			res.status(400).send({ success: false, message: error.message });
+		}
 	};
 	getPeticionById = async (req, res) => {
 		try {
@@ -42,7 +51,16 @@ class PeticionController {
 		res.send("Peticion actualizada");
 	};
 	deletePeticion = (req, res) => {
-		res.send("Peticion eliminada");
+		try {
+			const { id } = req.params;
+			const peticion = Peticion.destroy({
+				where: { id },
+			});
+			if (!peticion) throw new Error("no se elimino nada");
+			res.status(200).send({ success: true, message: "peticion eliminado", data: peticion });
+		} catch (error) {
+			res.status(400).send({ success: false, message: error.message });
+		}
 	};
 }
 
