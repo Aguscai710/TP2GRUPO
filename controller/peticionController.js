@@ -2,9 +2,16 @@ import { Peticion,Usuario,Libro } from "../models/relaciones.js";
 
 class PeticionController {
 	constructor() {}
-	getAllPeticiones = (req, res) => {
+	getAllPeticiones = async (req, res) => {
 		try {
-			const peticiones =  Peticion.findAll({ attributes: ["id"] });
+			const peticiones = await Peticion.findAll({
+				attributes: ["id"],
+				include: [
+					{ model: Libro, attributes: ["titulo","id"] },
+					{ model: Usuario, attributes: ["nombre","id"] },
+				],
+			});
+
 			res.status(200).send({
 				success: true,
 				message: "Todas las peticiones que hay",
@@ -20,7 +27,10 @@ class PeticionController {
 			const pet = await Peticion.findOne({
 				where: { id },
 				attributes: ["id"],
-				include:[{model:Libro, attributes:["titulo"]}]
+				include: [
+					{ model: Libro, attributes: ["titulo"] },
+					{ model: Usuario, attributes: ["nombre"] },
+				],
 			});
 
 			if (!pet) throw new Error("no hay Peticion");

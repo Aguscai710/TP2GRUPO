@@ -1,10 +1,16 @@
-import { Confirmacion } from "../models/relaciones.js";
+import { Confirmacion,Usuario,Libro } from "../models/relaciones.js";
 
 class ConfirmacionController {
 	constructor() {}
-	getAllConfirmaciones = (req, res) => {
+	getAllConfirmaciones = async (req, res) => {
 		try {
-			const confirmaciones = Confirmacion.findAll({ attributes: ["id"] });
+			const confirmaciones = await Confirmacion.findAll({
+				attributes: ["id"],
+				include: [
+					{ model: Libro, attributes: ["titulo", "id"] },
+					{ model: Usuario, attributes: ["nombre", "id"] },
+				],
+			});
 			res.status(200).send({
 				success: true,
 				message: "Todas las confirmaciones que hay",
@@ -20,9 +26,13 @@ class ConfirmacionController {
 			const conf = await Confirmacion.findOne({
 				where: { id },
 				attributes: ["id"],
-			});
+				include: [
+					{ model: Usuario, attributes: ["nombre"] },
+					{ model: Libro, attributes: ["titulo"] },
+				],
+			});	
 
-			if (!user) throw new Error("no hay Confirmacion");
+			if (!conf) throw new Error("no hay Confirmacion");
 
 			res.status(200).send({
 				success: true,
@@ -35,8 +45,8 @@ class ConfirmacionController {
 	};
 	createConfirmacion = async (req, res) => {
 		try {
-			const { usuario, libro} = req.body;
-			const conf = await Confirmacion.create({ usuario, libro});
+			const {descripcion, usuarioid, libroid} = req.body;
+			const conf = await Confirmacion.create({ descripcion,usuarioid, libroid});
 			res.status(200).send({
 				success: true,
 				message: "Confirmacion creada con exito",

@@ -2,9 +2,9 @@ import { Usuario, Libro } from "../models/relaciones.js";
 
 class LibroController {
 	constructor() {}
-	getAllLibros = (req, res) => {
+	getAllLibros = async (req, res) => {
 		try {
-			const libros = Libro.findAll({ attributes: ["id"] });
+			const libros = await Libro.findAll({ attributes: ["id","titulo","autor","descripcion","genero"] });
 			res.status(200).send({
 				success: true,
 				message: "Todos los libros que hay",

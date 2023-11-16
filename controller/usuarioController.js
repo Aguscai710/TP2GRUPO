@@ -74,16 +74,14 @@ class UsuarioController {
 
 			const payload = {
 				id: user.id,
-				name: user.nombre,
-				mail: user.mail,
-				password: user.password,
+				name: user.nombre
 			};
-			console.log(payload);
+			
 
 			const token = generateToken(payload);
 			res.cookie("token", token);
 
-			res.status(200).send({ success: true, message: "usuario logeado" });
+			res.status(200).send({ success: true, message: payload });
 		} catch (error) {
 			res.status(400).send({ success: false, message: error.message });
 		}
