@@ -4,7 +4,7 @@ class UsuarioController {
 	constructor() {}
 	getAllUsuarios = async (req, res) => {
 		try {
-			const usuarios = await Usuario.findAll({ attributes: ["id", "nombre", "mail"] });
+			const usuarios = await Usuario.findAll({ attributes: ["id", "nombre","password", "mail"] });
 			res.status(200).send({
 				success: true,
 				message: "Todos los usuarios que hay",
@@ -67,10 +67,7 @@ class UsuarioController {
 			const user = await Usuario.findOne({
 				where: { mail },
 			});
-			if (!user) throw new Error("User chucu");
-
-			const validate = await user.validatePassword(password);
-			if (!validate) throw new Error("User chucu");
+			if (!user) throw new Error("Usuario no encontrado");
 
 			const payload = {
 				id: user.id,
