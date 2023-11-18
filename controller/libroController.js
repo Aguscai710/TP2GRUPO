@@ -6,6 +6,12 @@ class LibroController {
 		try {
 			const libros = await Libro.findAll({ attributes: ["id","titulo","autor","descripcion","genero","imagen"],
 		include:[{model:Usuario,attributes:["nombre","id"]}] });
+
+
+
+
+		
+		
 			res.status(200).send({
 				success: true,
 				message: "Todos los libros que hay",
