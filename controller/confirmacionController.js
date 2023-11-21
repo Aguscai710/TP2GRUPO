@@ -5,7 +5,7 @@ class ConfirmacionController {
 	getAllConfirmaciones = async (req, res) => {
 		try {
 			const confirmaciones = await Confirmacion.findAll({
-				attributes: ["id"],
+				attributes: ["id", "descripcion"],
 				include: [
 					{ model: Libro, attributes: ["titulo", "id"] },
 					{ model: Usuario, attributes: ["nombre", "id"] },

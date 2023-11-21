@@ -1,4 +1,5 @@
 import { Usuario,Libro } from "../models/relaciones.js";
+import {generateToken} from "../utils/token.js"
 
 class UsuarioController {
 	constructor() {}
@@ -34,6 +35,7 @@ class UsuarioController {
 			res.status(400).send({ success: false, message: error.message });
 		}
 	};
+	
 	createUser = async (req, res) => {
 		try {
 			const { nombre, password, mail, telefono } = req.body;
@@ -71,22 +73,22 @@ class UsuarioController {
 
 			const payload = {
 				id: user.id,
-				name: user.nombre
+				name: user.nombre,
 			};
 			
 
 			const token = generateToken(payload);
 			res.cookie("token", token);
+			
 
-			res.status(200).send({ success: true, message: payload });
+			res.status(200).send({ success: true, message: "usuario logueado", data: payload });
 		} catch (error) {
 			res.status(400).send({ success: false, message: error.message });
 		}
 	};
 	me = async (req, res) => {
-    console.log(req.user)
     try {
-      res.status(200).send({ success: true, message: "usuario me" });
+      res.status(200).send({ success: true, message: "usuario me", data: req.user});
     } catch (error) {
       res.status(400).send({ success: false, message: error.message });
     }

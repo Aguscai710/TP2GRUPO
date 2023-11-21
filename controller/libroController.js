@@ -61,9 +61,27 @@ class LibroController {
 			res.status(400).send({ success: false, message: error.message });
 		}
 	};
-	updateLibro = (req, res) => {
-		res.send("Libro actualizado");
-	};
+	updateLibro = async (req, res) => {
+		try {
+		  const { titulo } = req.body;
+		  const { descripcion } = req.body;
+		  const { autor } = req.body;
+		  const { genero } = req.body;
+		  const { imagen } = req.body;
+		  const { usuarioid } = req.body;
+		  const { id } = req.params;
+		  const libro = await Libro.update(
+			{titulo,descripcion,genero,autor,imagen,usuarioid},
+			{
+			  where: { id },
+			}
+		  );
+		  if (libro[0] === 0) throw new Error("no se modifico nada");
+		  res.status(200).send({ success: true, message: "libro modificado" });
+		} catch (error) {
+		  res.status(400).send({ success: false, message: error.message });
+		}
+	  };
 	deleteLibro = (req, res) => {
 		try {
 			const { id } = req.params;

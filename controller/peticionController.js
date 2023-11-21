@@ -5,7 +5,7 @@ class PeticionController {
 	getAllPeticiones = async (req, res) => {
 		try {
 			const peticiones = await Peticion.findAll({
-				attributes: ["id"],
+				attributes: ["id","descripcion"],
 				include: [
 					{ model: Libro, attributes: ["titulo","id"] },
 					{ model: Usuario, attributes: ["nombre","id"] },

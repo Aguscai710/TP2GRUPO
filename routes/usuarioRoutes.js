@@ -9,9 +9,8 @@ usuarioRoutes.get("", usuarioController.getAllUsuarios);
 usuarioRoutes.get("/:id/", usuarioController.getUsuarioById);
 usuarioRoutes.post("", usuarioController.createUser);
 usuarioRoutes.delete("/:id/", usuarioController.deleteUser);
-usuarioRoutes.use(validatetoken);
 usuarioRoutes.post("/login", usuarioController.login);
-
+usuarioRoutes.use(validatetoken);
 usuarioRoutes.get("/me",validatetoken, usuarioController.me);
 
 
