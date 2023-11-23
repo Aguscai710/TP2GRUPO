@@ -7,7 +7,7 @@ const dialect = "mysql";
 const host = "localhost";
 const port = 3306;
 
-const connection = new Sequelize(database, username, password, {
+const connection = new Sequelize(database, username, "", {
 	host,
 	dialect /* one of 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */,
 	port,
