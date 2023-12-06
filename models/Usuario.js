@@ -24,9 +24,13 @@ Usuario.init(
 			type: DT.INTEGER,
 			allowNull: false,
 			validate: {
-				isInt: true
+				isInt: true,
 			},
 		},
+		rol: {
+			type: DT.STRING(50),
+			allowNull: false,
+			}
 		
 	},
 	{

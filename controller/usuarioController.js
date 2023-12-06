@@ -38,8 +38,8 @@ class UsuarioController {
 	
 	createUser = async (req, res) => {
 		try {
-			const { nombre, password, mail, telefono } = req.body;
-			const user = await Usuario.create({ nombre, password, mail, telefono });
+			const { nombre, password, mail, telefono, rol } = req.body;
+			const user = await Usuario.create({ nombre, password, mail, telefono, rol });
 			res.status(200).send({
 				success: true,
 				message: "Usuario creado con exito",
@@ -74,6 +74,7 @@ class UsuarioController {
 			const payload = {
 				id: user.id,
 				name: user.nombre,
+				rol:user.rol
 			};
 			
 

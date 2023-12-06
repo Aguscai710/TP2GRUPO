@@ -2,6 +2,9 @@ import Libro from "./Libro.js"
 import Usuario from "./Usuario.js"
 import Peticion from "./Peticion.js"
 import Confirmacion from "./Confirmacion.js"
+import Estadistica from "./Estadistica.js";
+
+
 
 Usuario.hasMany(Libro,{
     foreignKey:"usuarioid"
@@ -47,4 +50,4 @@ Confirmacion.belongsTo(Libro, {
 
 
 
-export {Libro,Usuario,Peticion,Confirmacion}
+export {Libro,Usuario,Peticion,Confirmacion,Estadistica}
